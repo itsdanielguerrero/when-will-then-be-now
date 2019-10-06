@@ -13,11 +13,13 @@ function filterLogsByEnv(logs, env) {
 function filterLogsOnDate(logs, dateFilter) {
   const filteredLogs = []
   const parsedDateFilter = new Date(dateFilter)
-
+  
   logs.forEach((log) => {
     const timestampDate = new Date(log.timestamp)
-
-    if (parsedDateFilter.toDateString() === timestampDate.toDateString()) {
+    //toString() provide same date as dateFilter but also provides time - when we compare the time 
+    //used getUTCDate() and getUTCMonth() to get a universal time code day and month and to exclude time.
+    if (parsedDateFilter.getUTCDate() === timestampDate.getUTCDate() && 
+        parsedDateFilter.getUTCMonth() === timestampDate.getUTCMonth()) {
       filteredLogs.push(log)
     }
   })
